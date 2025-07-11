@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Sowmya</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', cursive, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 15px #ff80ab;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    .gift {
+      font-size: 5rem;
+      cursor: pointer;
+      animation: bounce 1s infinite alternate;
+      transition: transform 0.3s ease;
+      z-index: 2;
+    }
+
+    .gift:hover {
+      transform: scale(1.2);
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    .message {
+      display: none;
+      animation: fadeIn 2s ease-in-out;
+      margin-top: 30px;
+      padding: 30px;
+      max-width: 90%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+      z-index: 2;
+    }
+
+    .letter {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      text-shadow: 0 0 4px rgba(255,255,255,0.3);
+    }
+
+    .signature {
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #ffe4e6;
+    }
+
+    .confetti, .heart, .sparkle, .trail {
+      position: absolute;
+      animation: float 5s linear infinite;
+      z-index: 1;
+    }
+
+    .heart {
+      color: #ff69b4;
+      font-size: 1.5rem;
+    }
+
+    .sparkle {
+      color: gold;
+      font-size: 1rem;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Stars background */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .stars::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: white;
+      box-shadow:
+        100px 200px white, 150px 400px white, 200px 100px white,
+        300px 250px white, 400px 500px white, 600px 300px white,
+        700px 100px white, 800px 400px white, 900px 250px white,
+        1000px 600px white, 1100px 150px white, 1200px 500px white;
+      animation: twinkle 4s linear infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars"></div>
+
+  <h1>🎂 Happy Birthday Sowmya ✨</h1>
+  <div class="gift" onclick="revealSurprise()">🎁</div>
+
+  <div class="message" id="birthday-message">
+    <p class="letter">
+      Hey Sowmya...<br><br>
+      This is not just a website. It’s a little pocket of magic I made just for you.<br><br>
+      May today feel like warm sunlight, your favorite song, and the best memories all in one.<br><br>
+      You are loved, celebrated, and cherished — <strong>Happy Birthday 💖</strong>
+      <div>– Yours,<span style="font-size:3rem">Dude...</span>  ✨</div>
+    </p>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-betterdays.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let started = false;
+
+    function revealSurprise() {
+      if (!started) {
+        document.getElementById('birthday-message').style.display = 'block';
+
+        const audio = document.getElementById('bg-music');
+        audio.volume = 0;
+        audio.play();
+        let volume = 0;
+        const fade = setInterval(() => {
+          if (volume < 1) {
+            volume += 0.05;
+            audio.volume = volume;
+          } else {
+            clearInterval(fade);
+          }
+        }, 200);
+
+        started = true;
+      }
+
+      createConfetti();
+      createHearts();
+      createSparkles();
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = (Math.random() * 10 + 90) + 'vh';
+        confetti.style.width = '10px';
+        confetti.style.height = '10px';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 6000);
+      }
+    }
+
+    function createHearts() {
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '💖';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100vh';
+        heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+
+    function createSparkles() {
+      for (let i = 0; i < 25; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = '✨';
+        sparkle.style.left = Math.random() * 100 + 'vw';
+        sparkle.style.top = '100vh';
+        sparkle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 6000);
+      }
+    }
+
+    setInterval(() => {
+      if (started) {
+        createConfetti();
+        createHearts();
+        createSparkles();
+      }
+    }, 4000);
+
+    // 🌟 Mouse sparkle trail
+    document.addEventListener('mousemove', (e) => {
+      const trail = document.createElement('div');
+      trail.className = 'trail';
+      trail.textContent = '✨';
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
+      trail.style.position = 'absolute';
+      trail.style.pointerEvents = 'none';
+      trail.style.opacity = 1;
+      trail.style.transition = 'opacity 1s ease';
+      document.body.appendChild(trail);
+      setTimeout(() => trail.style.opacity = 0, 100);
+      setTimeout(() => trail.remove(), 1500);
+    });
+  </script>
+</body>
+</html>
